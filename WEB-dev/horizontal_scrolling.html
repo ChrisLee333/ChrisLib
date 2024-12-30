@@ -1,0 +1,36 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="item">
+                content
+            </div>
+            <div class="item">
+                Hallo
+            </div>
+        </div>
+    </body>
+</html>
+
+<style>
+    .container{
+        display: flex;
+        overflow-x: scroll;
+        padding: 24px;
+        width: 300px;
+        scroll-snap-type: x mandatory;
+        scroll-padding: 24px;
+        border-radius: 8px;
+        gap: 12px;
+    }
+
+    .container .item {
+        flex: 0 0 100%;
+        padding: 24px;
+        border-radius: 8px;
+        scroll-snap-align: start;
+        background-color: rgb(103, 170, 197);
+    }
+</style>

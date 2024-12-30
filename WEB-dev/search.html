@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .ReportPage{
+            margin: 15px;
+            padding: 15px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .sbutton{
+            background-color: #fff;
+            color: #000;
+            border: 2px solid;
+            border-color: #222d32;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            transition-duration: 350ms;
+        }
+        .sbutton:hover{
+            background-color: #222d32;
+            color: #fff;
+            padding: 15px 28px;
+            transition-duration: 350ms;
+        }
+        .sbutton:disabled,
+        .sbutton[disabled]{
+            border: 1px solid #999999;
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+        }
+        .dropbtn {
+            min-width: 250px;;
+            background-color: #fff;
+            color: #000;
+            padding: 16px;
+            font-size: 16px;
+            border: 2px solid;
+            border-color: #222d32;
+            cursor: pointer;
+            text-align: left;
+            transition-duration: 350ms;
+        }
+        
+        .dropbtn:hover{
+          background-color: #222d32;
+          color: #fff;
+          transition-duration: 350ms;
+        }
+        
+        #myInput, #myInput2 {
+          box-sizing: border-box;
+          background-position: 14px 12px;
+          background-repeat: no-repeat;
+          font-size: 16px;
+          padding: 14px 20px 12px 45px;
+          border: none;
+          border-bottom: 1px solid #ddd;
+        }
+        
+        #myInput:focus , #myInput2:focus {outline: 3px solid #ddd;}
+        
+        .dropdown {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f6f6f6;
+          min-width: 230px;
+          overflow: auto;
+          border: 1px solid #ddd;
+          z-index: 1;
+        }
+        
+        .dropdown-content a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+        }
+        
+        .dropdown a:hover {background-color: #ddd;}
+        
+        .show {display: block;}
+
+        output{
+            display: block;
+            margin-top: 20px;
+            color: #777;
+        }
+        output:before{
+            content:"Tage: ";
+            font-weight: bold;
+        }
+        .dropDownLang
+        {
+            width: 120px;
+            height: 40px;
+            font-size: 16px;
+            background-color: #fff;
+            color: #000;
+            border: 2px solid;
+            border-color: #222d32;
+            transition-duration: 350ms;
+        }
+
+        .slider {
+        width: 210px;
+        height: 60px;
+        padding: 15px;
+        padding-left: 0px;
+        background: transparent;
+        border-radius: 0px;
+        display: flex;
+        align-items: center;
+        }
+        .slider label {
+        font-size: 16px;
+        font-weight: 16;
+        padding-left: 0px;
+        color: black;
+        }
+        .slider output {
+        font-size: 16px;
+        font-weight: 16;
+        padding-left: 10px;
+        margin-top: 15px;
+        color: black;
+        }
+        .slider input[type="range"] {
+        width: 210px;
+        height: 2px;
+        background: black;
+        border: none;
+        outline: none;
+        }
+        .ticks {
+        display: flex;
+        justify-content: space-between;
+        width: 180px;
+        padding-left: 25px;
+        }
+        .tick {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 1px;
+        background: black;
+        }
+        .ticktext{
+            background-color: white;
+            margin-top: 12px;
+        }
+        </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--<base href="_w_8041a0c3/">-->
+    <base href=".">
+</head>
+
+<body>
+    <div class="ReportPage">
+        <h2>
+            <span class="i18n" data-key="TLD Engineer Report">TLD Engineer Report</span>
+        </h2>
+        <!-- <label class="control-label" id="SelectedLanguage-label" for="SelectedLanguage-selectized">
+            <h3>
+                <span class="i18n" data-key="Language">Sprache</span>
+            </h3>
+        </label>
+        <div>
+            <select id="SelectedLanguage" tabindex="-1" class="selectized shiny-bound-input">
+                <option value="DEU" selected="selected">DEU</option>
+                <option value="ENG">ENG</option>
+            </select>
+        </div> -->
+
+        <label class="control-label" for="EquipmentNumber">
+            <h3>
+                <span class="i18n" data-key="Equipment Number">Maschinennummer</span>
+            </h3>
+        </label>
+
+        <div class="dropdown" id="dropdownarea">
+            <button onclick="DropDownSelect('myDropdown')" class="dropbtn" id="eq_button">Maschine wählen...</button>
+            <div id="myDropdown" class="dropdown-content">
+              <input type="text" placeholder="Suchen..." id="myInput" onkeyup="filterFunction()">
+                <div id="equipments">
+                </div>
+            </div>
+          </div><br><br>
+        
+        
+        <label class="control-label" id="ReportLanguage-label" for="ReportLanguage-selectized">
+            <h3>
+                <span class="i18n" data-key="Report language">Berichtssprache</span>
+            </h3>
+        </label>
+                    
+        <div class="dropdown" id="dropdownarea2">
+            <button onclick="DropDownSelect('myDropdown2')" class="dropbtn" id="eq_button2">DEU</button>
+            <div id="myDropdown2" class="dropdown-content">
+              <input type="text" placeholder="Suchen..." id="myInput2" onkeyup="filterFunction2()">
+              <a onclick="ChangeData2('DEU')">DEU</a>
+              <a onclick="ChangeData2('ENG')">ENG</a>
+            </div>
+        </div><br><br>
+
+        <label class="control-label" id="UsagePlotPeriod-label" for="UsagePlotPeriod">
+            <h3>
+                <span class="i18n" data-key="Usage plot period in days">Nutzungsübersicht in Tagen</span>
+            </h3>
+        </label>
+                    
+        <div class="slider">  
+            <section>          
+                <input type="range" min="1" max="14" value="1" id="rangeInput" step="1" list="rangeInputs" oninput="RangeOutput.value = rangeInput.value">
+                <datalist id="rangeInputs">
+                    <option>1</option>
+                    <option></option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option></option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option></option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option></option>
+                </datalist>
+                <div class="ticks">
+                    <span class="tick"><span class="ticktext">2</span></span>
+                    <span class="tick"><span class="ticktext">6</span></span>
+                    <span class="tick"><span class="ticktext">10</span></span>
+                    <span class="tick"><span class="ticktext">14</span></span>
+                </div>
+                <output id="RangeOutput" for="rangeInput">1</output>
+            </section>
+        </div>
+
+        <br><br><br>
+        <button id="download" class="sbutton" disabled onclick="Download()">Click for full story</button>
+    </div>
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function DropDownSelect(tId) {
+          document.getElementById(tId).classList.toggle("show");
+
+        }
+        
+        function Download() {
+            var time = document.getElementById("rangeInput").value;
+            var equipment = document.getElementById("eq_button").innerHTML;
+            var lang = document.getElementById("eq_button2").innerHTML;
+            lang = lang == "DEU" ? "DE" : "EN";
+            fetch("https://srv01rserv2/report.html?equipment="+equipment+"&&timespan="+time+"&&language="+lang, { method: 'get' , headers: {
+                auth_key: "7P9~#GO.O\\sdy&0.%&c4"
+            }})
+            .then(response => response.blob())
+            .then((data) => {
+            var a = document.createElement("a");
+            a.href = window.URL.createObjectURL(data);
+            a.download = "report.html";
+            a.click();
+            })
+            .catch((error) => console.error("oops:",error));
+        }
+
+        function filterFunction() {
+          var input, filter, ul, li, a, i;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          div = document.getElementById("myDropdown");
+          a = div.getElementsByTagName("a");
+          for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              a[i].style.display = "";
+            } else {
+              a[i].style.display = "none";
+            }
+          }
+        }
+
+        function filterFunction2() {
+          var input, filter, ul, li, a, i;
+          input = document.getElementById("myInput2");
+          filter = input.value.toUpperCase();
+          div = document.getElementById("myDropdown2");
+          a = div.getElementsByTagName("a");
+          for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              a[i].style.display = "";
+            } else {
+              a[i].style.display = "none";
+            }
+          }
+        }
+
+        function ChangeData(InputText)
+        {
+            document.getElementById("eq_button").innerHTML = InputText;
+            document.getElementById("download").disabled = false;
+            DropDownSelect("myDropdown");
+        }
+
+        function ChangeData2(InputText)
+        {
+            document.getElementById("eq_button2").innerHTML = InputText;
+            DropDownSelect("myDropdown2");
+        }
+
+        var EQs = "";
+        for(i = 0; i < 10; i++)
+        {
+            EQs = EQs + ' <a onclick="ChangeData(\'A0165Q00'+i+'\')">A0165Q00'+i+'</a>';
+        }
+        document.getElementById("equipments").innerHTML = EQs;
+
+
+        document.addEventListener("mousedown", (event) => {
+        if (!document.getElementById("dropdownarea").contains(event.target)) {
+            if(document.getElementById("myDropdown").classList.contains("show"))
+                {
+                    DropDownSelect("myDropdown");
+                }
+        }
+        if (!document.getElementById("dropdownarea2").contains(event.target)) {
+            if(document.getElementById("myDropdown2").classList.contains("show"))
+                {
+                    DropDownSelect("myDropdown2");
+                }
+        }
+        });
+
+        </script>
+
+</body>
+
+</html>
